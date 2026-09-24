@@ -2,10 +2,11 @@ from src.hardware_discovery import HardwareScanner
 from src.ai_agent import AutonomousAIAgent
 from src.task_executor import AutonomousTaskExecutor
 from src.hal import UniversalHAL
+from src.self_healing import SelfHealingEngine
 
 def main():
     print("=" * 60)
-    print(" 🚀 Autonomous AI OS - Interactive Engine & HAL Active")
+    print(" 🚀 Autonomous AI OS - Fully Functional Architecture Active")
     print("=" * 60)
     
     # Phase 1: Hardware Scan
@@ -16,15 +17,19 @@ def main():
     agent = AutonomousAIAgent(hardware_data)
     action_plan, analysis = agent.generate_system_action_plan()
     
-    # Phase 4: Initialize HAL
+    # Phase 4: HAL
     hal = UniversalHAL()
     hal.auto_map_bus_device("Virtual-PCIe", "DEV_CPU_01", {"capabilities": ["compute", "threads"]})
     hal.auto_map_bus_device("Virtual-USB", "DEV_INPUT_01", {"capabilities": ["stream_input"]})
     
+    # Phase 5: Self Healing Engine
+    healer = SelfHealingEngine()
+    
     print(f"\n[+] Kernel Operational Mode: {analysis['suggested_mode']}")
-    print("[+] Dynamic HAL Initialized. Bus Mapping Complete.")
+    print("[+] Dynamic HAL Initialized. Zero-Driver Architecture Active.")
+    print("[+] Self-Healing & System Stability Engine Running.")
     print("=" * 60)
-    print("Type 'exit' or 'quit' to shut down. Type 'hal' to inspect mapped devices.")
+    print("Commands: 'hal' (Hardware), 'heal' (Health Check), 'exit' (Quit)")
     print("=" * 60)
     
     executor = AutonomousTaskExecutor(analysis)
@@ -32,16 +37,27 @@ def main():
     while True:
         try:
             user_input = input("\nAutoAI-OS Shell > ")
-            if user_input.strip().lower() in ['exit', 'quit']:
+            cmd = user_input.strip().lower()
+            
+            if cmd in ['exit', 'quit']:
                 print("Shutting down AutoAI-OS Kernel safely...")
                 break
                 
-            if user_input.strip().lower() == 'hal':
+            if cmd == 'hal':
                 print("\n[HAL Hardware Matrix]:")
                 print(hal.get_hal_matrix())
                 continue
+
+            if cmd == 'heal':
+                print("\n[Self-Healing Diagnostic Report]:")
+                report = healer.inspect_system_health()
+                print(f"Health Status: {report['health_status']}")
+                print(f"Memory Load: {report['memory_usage_percent']}% | CPU Load: {report['cpu_usage_percent']}%")
+                for action in report['corrective_actions']:
+                    print(f"  {action}")
+                continue
                 
-            if not user_input.strip():
+            if not cmd:
                 continue
                 
             response = executor.parse_and_execute(user_input)

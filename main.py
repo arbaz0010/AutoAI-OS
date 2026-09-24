@@ -1,37 +1,45 @@
 from src.hardware_discovery import HardwareScanner
 from src.ai_agent import AutonomousAIAgent
+from src.task_executor import AutonomousTaskExecutor
 
 def main():
     print("=" * 60)
-    print(" 🚀 Autonomous AI OS - Booting System Engine")
+    print(" 🚀 Autonomous AI OS - Interactive Engine Active")
     print("=" * 60)
     
-    # Step 1: Scan Environment
-    print("\n[Phase 1] Scanning Hardware Environment...")
+    # Phase 1: Hardware Scan
     scanner = HardwareScanner()
     hardware_data = scanner.scan_system()
     
-    print(f"    ✔ System: {hardware_data['platform']['system']} ({hardware_data['cpu']['architecture']})")
-    print(f"    ✔ CPU Cores: {hardware_data['cpu']['cores_physical']} Physical / {hardware_data['cpu']['cores_total']} Logical")
-    print(f"    ✔ RAM: {hardware_data['memory']['total_gb']} GB Total")
-    
-    # Step 2: Initialize AI Agent Analysis
-    print("\n[Phase 2] Handing over control to Autonomous AI Agent...")
+    # Phase 2: AI Agent Decision
     agent = AutonomousAIAgent(hardware_data)
     action_plan, analysis = agent.generate_system_action_plan()
     
-    print("\n--- AI Agent Analysis Report ---")
-    print(f"Hardware Class: {analysis['hardware_rating']}")
-    print(f"Recommended System Mode: {analysis['suggested_mode']}")
-    print(f"Execution Strategy: {analysis['ai_execution_strategy']}")
-    
-    print("\n--- Execution Action Plan ---")
-    for action in action_plan:
-        print(f"  {action}")
-
-    print("\n" + "=" * 60)
-    print(" Autonomous AI OS Kernel Active & Ready.")
+    print(f"\n[+] Kernel Operational Mode: {analysis['suggested_mode']}")
+    print("[+] Zero-Driver Hardware Abstraction Layer Active.")
     print("=" * 60)
+    print("Type 'exit' or 'quit' to shut down the Autonomous Shell.")
+    print("=" * 60)
+    
+    # Phase 3: Autonomous AI Shell Loop
+    executor = AutonomousTaskExecutor(analysis)
+    
+    while True:
+        try:
+            user_input = input("\nAutoAI-OS Shell > ")
+            if user_input.strip().lower() in ['exit', 'quit']:
+                print("Shutting down AutoAI-OS Kernel safely...")
+                break
+                
+            if not user_input.strip():
+                continue
+                
+            response = executor.parse_and_execute(user_input)
+            print(response)
+            
+        except KeyboardInterrupt:
+            print("\nShutting down AutoAI-OS Kernel...")
+            break
 
 if __name__ == "__main__":
     main()

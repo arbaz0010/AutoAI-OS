@@ -3,10 +3,12 @@ from src.ai_agent import AutonomousAIAgent
 from src.task_executor import AutonomousTaskExecutor
 from src.hal import UniversalHAL
 from src.self_healing import SelfHealingEngine
+from src.code_generator import DynamicCodeGenerator
+from src.cts_runner import HardwareCompatibilityTestSuite
 
 def main():
     print("=" * 60)
-    print(" 🚀 Autonomous AI OS - Fully Functional Architecture Active")
+    print(" 🚀 Autonomous AI OS - Core Foundation Complete (Phase 1-7)")
     print("=" * 60)
     
     # Phase 1: Hardware Scan
@@ -22,14 +24,17 @@ def main():
     hal.auto_map_bus_device("Virtual-PCIe", "DEV_CPU_01", {"capabilities": ["compute", "threads"]})
     hal.auto_map_bus_device("Virtual-USB", "DEV_INPUT_01", {"capabilities": ["stream_input"]})
     
-    # Phase 5: Self Healing Engine
+    # Phase 5, 6 & 7 Modules
     healer = SelfHealingEngine()
+    codegen = DynamicCodeGenerator(ai_mode=analysis['suggested_mode'])
+    cts = HardwareCompatibilityTestSuite(hal, healer)
     
     print(f"\n[+] Kernel Operational Mode: {analysis['suggested_mode']}")
-    print("[+] Dynamic HAL Initialized. Zero-Driver Architecture Active.")
-    print("[+] Self-Healing & System Stability Engine Running.")
+    print("[+] Dynamic HAL & Self-Healing Engine Active.")
+    print("[+] LLM Dynamic Code Synthesizer Ready.")
+    print("[+] Hardware Compatibility Test Suite (CTS) Initialized.")
     print("=" * 60)
-    print("Commands: 'hal' (Hardware), 'heal' (Health Check), 'exit' (Quit)")
+    print("Commands: 'hal', 'heal', 'generate', 'cts' (Run Tests), 'exit'")
     print("=" * 60)
     
     executor = AutonomousTaskExecutor(analysis)
@@ -55,6 +60,16 @@ def main():
                 print(f"Memory Load: {report['memory_usage_percent']}% | CPU Load: {report['cpu_usage_percent']}%")
                 for action in report['corrective_actions']:
                     print(f"  {action}")
+                continue
+
+            if cmd == 'generate':
+                print("\n[Synthesizing Driver Code for Unknown Peripheral...]")
+                result = codegen.synthesize_and_run("DEV_NEURAL_ACCELERATOR_01", "tensor_compute")
+                print(result)
+                continue
+
+            if cmd == 'cts':
+                cts.run_full_cts_diagnostics()
                 continue
                 
             if not cmd:

@@ -92,6 +92,40 @@ Once the kernel initializes, you can use the following builtin commands inside t
 - `cts` — Execute the Hardware Compatibility Test Suite.
 - `exit` — Safely shut down the kernel.
 
+
+## 🤝 Community & Contributors
+
+We welcome open-source developers, systems engineers, and AI researchers to help shape the future of autonomous operating systems!
+
+### How You Can Contribute
+* **Embedded / MicroPython Integration:** Expand low-level bare-metal hardware bridges (`firmware/`).
+* **Local LLM Adapters:** Integrate Ollama/Llama.cpp drivers into `src/code_generator.py`.
+* **Hardware CTS Tests:** Write new diagnostic test cases in `src/cts_runner.py`.
+* **Documentation & Bug Fixes:** Refine existing code, write tutorials, or fix reported issues.
+
+Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines, branch strategy, and code standards.
+
+### Core Contributors
+
+Thanks to everyone contributing to the core engine and ecosystem!
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/YOUR_USERNAME"><img src="https://github.com/YOUR_USERNAME.png" width="100px;" alt=""/><br /><sub><b>Project Founder & Lead Architect</b></sub></a><br />💻 📖 🚇 🔣</td>
+  </tr>
+</table>
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 ---
 
-## 
+## 📜 License & Governance
+
+This project is open-source under the **[Apache License 2.0](LICENSE)**. 
+
+* The core framework is 100% royalty-free and open for modification and redistribution.
+* Commercial certification, CTS validation, and AI Model licensing remain managed under official AutoAI-OS Ecosystem Terms. 

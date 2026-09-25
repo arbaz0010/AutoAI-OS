@@ -13,7 +13,7 @@
 
 Traditional operating systems (POSIX/Linux/Windows) rely on static kernel drivers and rigid legacy abstraction layers. **AutoAI-OS** introduces a paradigm shift: an intelligent runtime where hardware discovery, bus abstraction, diagnostic health, and driver execution are dynamically managed by a resident AI Kernel and LLM Code Generator.
 
-Inspired by bare-metal direct-boot architectures (such as `NIGHTRUN`) and designed for modular scaling across platforms—from cloud nodes to embedded MicroPython firmware—AutoAI-OS provides a fully autonomous operating environment for modern computing workloads.
+Inspired by bare-metal direct-boot architectures and designed for modular scaling across platforms—from cloud nodes to embedded MicroPython firmware—AutoAI-OS provides a fully autonomous operating environment for modern computing workloads.
 
 ---
 
@@ -102,8 +102,6 @@ We welcome open-source developers, systems engineers, and AI researchers to help
 * **Local LLM Adapters:** Integrate Ollama/Llama.cpp drivers into `src/code_generator.py`.
 * **Hardware CTS Tests:** Write new diagnostic test cases in `src/cts_runner.py`.
 * **Documentation & Bug Fixes:** Refine existing code, write tutorials, or fix reported issues.
-
-Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines, branch strategy, and code standards.
 
 ### Core Contributors
 

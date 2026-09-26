@@ -57,4 +57,34 @@ int scheduler_create_task(const char* name, void (*func)(void), uint32_t priorit
 void scheduler_schedule_next(void);
 void scheduler_print_tasks(void);
 
+// IDT Entry Structure (x86_64)
+typedef struct {
+    uint16_t offset_low;    // Offset bits 0..15
+    uint16_t selector;      // Code segment selector
+    uint8_t  ist;           // Interrupt Stack Table offset
+    uint8_t  type_attr;     // Type and attributes
+    uint16_t offset_mid;    // Offset bits 16..31
+    uint32_t offset_high;   // Offset bits 32..63
+    uint32_t zero;          // Reserved
+} __attribute__((packed)) IDTEntry;
+
+typedef struct {
+    uint16_t limit;
+    uint64_t base;
+} __attribute__((packed)) IDTPtr;
+
+// Registers state saved during Interrupt
+typedef struct {
+    uint64_t r15, r14, r13, r12, r11, r10, r9, r8;
+    uint64_t rbp, rdi, rsi, rdx, rcx, rbx, rax;
+    uint64_t int_no, err_code;
+    uint64_t rip, cs, rflags, rsp, ss;
+} InterruptRegisters;
+
+// Prototypes
+void interrupt_init(void);
+void timer_init(uint32_t frequency_hz);
+void isr_handler(InterruptRegisters *regs);
+void irq_timer_handler(InterruptRegisters *regs);
+
 #endif // KERNEL_H

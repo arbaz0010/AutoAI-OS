@@ -87,4 +87,25 @@ void timer_init(uint32_t frequency_hz);
 void isr_handler(InterruptRegisters *regs);
 void irq_timer_handler(InterruptRegisters *regs);
 
+// Hardware Register Mapping Addresses
+#define COM1_PORT 0x3F8            // x86_64 Serial Port COM1 Base
+#define ARM_UART_BASE 0x09000000   // ARM64 PL011 UART MMIO Base Address
+
+// Bus Mapping Structure
+typedef struct {
+    uint64_t physical_address;
+    uint64_t virtual_address;
+    size_t size;
+    uint8_t is_io_mapped;
+} MMIOMapping;
+
+// Bus & Driver Prototypes
+void mmio_init(void);
+void* mmio_map_region(uint64_t phys_addr, size_t size);
+void uart_init(void);
+void uart_putc(char c);
+void uart_puts(const char* str);
+uint8_t mmio_read8(uint64_t addr);
+void mmio_write8(uint64_t addr, uint8_t val);
+
 #endif // KERNEL_H

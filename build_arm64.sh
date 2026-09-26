@@ -21,8 +21,10 @@ aarch64-linux-gnu-gcc -O3 -Wall -ffreestanding -nostdlib -Iinclude \
     -c kernel/memory.c -o kernel/memory_arm64.o
 aarch64-linux-gnu-gcc -O3 -Wall -ffreestanding -nostdlib -Iinclude \
     -c kernel/ai_engine.c -o kernel/ai_engine_arm64.o
-    aarch64-linux-gnu-gcc -O3 -Wall -ffreestanding -nostdlib -Iinclude \
+aarch64-linux-gnu-gcc -O3 -Wall -ffreestanding -nostdlib -Iinclude \
     -c kernel/scheduler.c -o kernel/scheduler.o
+aarch64-linux-gnu-gcc -O3 -Wall -ffreestanding -nostdlib -Iinclude \
+    -c kernel/interrupts.c -o kernel/interrupts.o 
 
 # Link ARM64 ELF Binary
 aarch64-linux-gnu-ld -T boot/linker_arm64.ld \
@@ -32,6 +34,7 @@ aarch64-linux-gnu-ld -T boot/linker_arm64.ld \
     kernel/memory_arm64.o \
     kernel/ai_engine_arm64.o \
     kernel/scheduler.o \
+    kernel/interrupts. \
     -o autoai_kernel_arm64.elf
 
 echo "✅ ARM64 Kernel Binary Compiled Successfully: 'autoai_kernel_arm64.elf'"

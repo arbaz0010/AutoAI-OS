@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "🔨 Compiling Pure C AutoAI-OS Kernel with Interrupt Vector Table (IVT)..."
+echo "🔨 Compiling Pure C AutoAI-OS Kernel with MMIO & UART Bus Driver..."
 gcc -O3 -Wall -Iinclude \
     kernel/main.c \
     kernel/hal.c \
@@ -7,6 +7,7 @@ gcc -O3 -Wall -Iinclude \
     kernel/ai_engine.c \
     kernel/scheduler.c \
     kernel/interrupts.c \
+    kernel/bus_driver.c \
     -o autoai_kernel_native
 
 if [ $? -eq 0 ]; then

@@ -1,3 +1,9 @@
-psutil
-pyusb
-pydantic
+# AutoAI-OS Pure C / Assembly Native Bare-Metal Microkernel
+# -----------------------------------------------------------------------------
+# Python dependencies have been purged to eliminate Garbage Collection overhead.
+# This kernel requires a native C toolchain rather than Python pip packages:
+#
+# - GCC / Clang (x86_64 native compilation)
+# - gcc-aarch64-linux-gnu (ARM64 cross-compilation)
+# - NASM (x86 assembly bootloader)
+# - QEMU (Bare-metal emulation & testing)

@@ -2,30 +2,40 @@
 #include <stdio.h>
 #include <string.h>
 
+// Sample Kernel Tasks Logic
+void task_hardware_telemetry(void) {
+    printf("  [Task 1 Executing] Reading CPU Temperature & Power Metrics...\n");
+}
+
+void task_ai_evaluator(void) {
+    printf("  [Task 2 Executing] Evaluating System Hardware Matrix & Resource Allocation...\n");
+}
+
 void kernel_init(void) {
     printf("====================================================\n");
     printf(" 🚀 AutoAI-OS Pure C Native Bare-Metal Microkernel\n");
     printf("====================================================\n");
-    printf("[+] Garbage Collector: REMOVED (Zero-Latency Engine)\n");
-    printf("[+] Memory Allocation: Custom Arena Allocator\n");
-    printf("[+] Architecture: 64-Bit Pure C Native Stack\n");
+    printf("[+] Architecture: x86_64 & ARM64 Multi-Arch Core\n");
+    printf("[+] Memory: Custom Static Arena Allocator (No GC)\n");
     printf("====================================================\n\n");
 
     hal_init();
     ai_engine_init();
+    scheduler_init();
 
-    // Auto-map primary neural NPU and PCIe bus
+    // Register primary hardware
     hal_register_device("PCIe_BUS_0", "DEV_NEURAL_NPU_01", 0xFF01);
-    hal_register_device("Virtual_BUS_1", "DEV_CPU_CORE_0", 0x000F);
 
-    ai_engine_evaluate();
+    // Create Tasks in C-Scheduler
+    scheduler_create_task("HW_Telemetry", task_hardware_telemetry, 1);
+    scheduler_create_task("AI_Evaluator", task_ai_evaluator, 2);
 }
 
 int main(void) {
     kernel_init();
 
     char input[64];
-    printf("\nAutoAI-OS Shell Active (Pure C Engine). Type 'help' or 'exit'.\n");
+    printf("\nAutoAI-OS Shell Active. Type 'help', 'tasks', 'tick', or 'exit'.\n");
 
     while (1) {
         printf("\nAutoAI-OS (Native) > ");
@@ -34,16 +44,18 @@ int main(void) {
         input[strcspn(input, "\n")] = 0; // Strip newline
 
         if (strcmp(input, "exit") == 0 || strcmp(input, "quit") == 0) {
-            printf("Halting AutoAI-OS Pure C Kernel Safely...\n");
+            printf("Halting Kernel Safely...\n");
             break;
+        } else if (strcmp(input, "tasks") == 0) {
+            scheduler_print_tasks();
+        } else if (strcmp(input, "tick") == 0) {
+            scheduler_schedule_next();
         } else if (strcmp(input, "hal") == 0) {
             hal_print_matrix();
-        } else if (strcmp(input, "status") == 0) {
-            printf("[System Status]: OPERATIONAL | Mode: HIGH_PERFORMANCE | GC: NONE\n");
         } else if (strcmp(input, "help") == 0) {
-            printf("Available Commands: 'hal', 'status', 'exit'\n");
+            printf("Commands: 'tasks' (List Tasks), 'tick' (Switch & Run Next Task), 'hal', 'exit'\n");
         } else if (strlen(input) > 0) {
-            printf("Unknown Command: '%s'. Type 'help' for options.\n", input);
+            printf("Unknown Command: '%s'\n", input);
         }
     }
 

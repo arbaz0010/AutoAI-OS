@@ -26,7 +26,9 @@ aarch64-linux-gnu-gcc -O3 -Wall -ffreestanding -nostdlib -Iinclude \
 aarch64-linux-gnu-gcc -O3 -Wall -ffreestanding -nostdlib -Iinclude \
     -c kernel/interrupts.c -o kernel/interrupts_arm64.o
 aarch64-linux-gnu-gcc -O3 -Wall -ffreestanding -nostdlib -Iinclude \
-    -c kernel/bus_driver.c -o kernel/bus_driver_arm64.o 
+    -c kernel/bus_driver.c -o kernel/bus_driver_arm64.o
+aarch64-linux-gnu-gcc -O3 -Wall -ffreestanding -nostdlib -Iinclude \
+    -c kernel/vfs_arm64.c -o kernel/vfs_arm64.o
 
 # Link ARM64 ELF Binary
 aarch64-linux-gnu-ld -T boot/linker_arm64.ld \
@@ -38,6 +40,7 @@ aarch64-linux-gnu-ld -T boot/linker_arm64.ld \
     kernel/scheduler_arm64.o \
     kernel/interrupts_arm64.o \
     kernel/bus_driver_arm64.o \
+    kernel/vfs_arm64.o \
     -o autoai_kernel_arm64.elf
 
 echo "✅ ARM64 Kernel Binary Compiled Successfully: 'autoai_kernel_arm64.elf'"

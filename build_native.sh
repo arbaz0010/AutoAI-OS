@@ -8,6 +8,7 @@ gcc -O3 -Wall -Iinclude \
     kernel/scheduler.c \
     kernel/interrupts.c \
     kernel/bus_driver.c \
+    kernel/vfs.c \
     -o autoai_kernel_native
 
 if [ $? -eq 0 ]; then

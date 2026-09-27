@@ -108,4 +108,29 @@ void uart_puts(const char* str);
 uint8_t mmio_read8(uint64_t addr);
 void mmio_write8(uint64_t addr, uint8_t val);
 
+// VFS Node Types
+typedef enum {
+    VFS_FILE,
+    VFS_DIRECTORY,
+    VFS_DEVICE
+} VFSNodeType;
+
+// File Control Block / VFS Node
+typedef struct VFSNode {
+    char name[32];
+    VFSNodeType type;
+    size_t size;
+    uint8_t buffer[1024]; // Static 1KB In-Memory File Buffer
+    uint32_t flags;
+    struct VFSNode *parent;
+    struct VFSNode *next; // Linked list pointer for directories
+} VFSNode;
+
+// VFS Function Prototypes
+void vfs_init(void);
+VFSNode* vfs_create_file(const char* name, VFSNodeType type);
+int vfs_write(VFSNode* node, const void* data, size_t size);
+int vfs_read(VFSNode* node, void* buffer, size_t size);
+void vfs_list_dir(void);
+
 #endif // KERNEL_H

@@ -17,6 +17,7 @@ void kernel_init(void) {
     printf("[+] Architecture: x86_64 & ARM64 Multi-Arch Core\n");
     printf("[+] Memory: Custom Static Arena Allocator (No GC)\n");
     printf("[+] Bus Control: Direct MMIO & UART Hardware Driver\n");
+    printf("[+] VFS: RAM Arena Virtual File System Active\n");
     printf("====================================================\n\n");
 
     hal_init();
@@ -24,9 +25,10 @@ void kernel_init(void) {
     scheduler_init();
     interrupt_init();
     mmio_init();
+    vfs_init(); // In-Memory VFS Mounting
 
     // Map Neural NPU PCIe Bus directly into kernel MMIO space
-    mmio_map_region(0xE0000000, 0x10000); // 64KB NPU MMIO Region
+    mmio_map_region(0xE0000000, 0x10000); 
     hal_register_device("PCIe_BUS_0", "DEV_NEURAL_NPU_01", 0xFF01);
 
     scheduler_create_task("HW_Telemetry", task_hardware_telemetry, 1);
@@ -37,7 +39,7 @@ int main(void) {
     kernel_init();
 
     char input[64];
-    printf("\nAutoAI-OS Shell Active. Commands: 'bus', 'uart', 'tasks', 'irq', 'exit'.\n");
+    printf("\nAutoAI-OS Shell Active. Commands: 'ls', 'bus', 'uart', 'tasks', 'irq', 'exit'.\n");
 
     while (1) {
         printf("\nAutoAI-OS (Native) > ");
@@ -48,6 +50,8 @@ int main(void) {
         if (strcmp(input, "exit") == 0 || strcmp(input, "quit") == 0) {
             printf("Halting Kernel Safely...\n");
             break;
+        } else if (strcmp(input, "ls") == 0) {
+            vfs_list_dir();
         } else if (strcmp(input, "bus") == 0) {
             printf("[Testing MMIO Bus Mapping Registers...]\n");
             mmio_map_region(0xFEB00000, 0x4000);
@@ -60,7 +64,7 @@ int main(void) {
             InterruptRegisters dummy_regs = {.int_no = 32};
             for(int i = 0; i < 100; i++) isr_handler(&dummy_regs);
         } else if (strcmp(input, "help") == 0) {
-            printf("Commands: 'bus' (Test MMIO Mapping), 'uart' (Hardware Serial Out), 'tasks', 'irq', 'exit'\n");
+            printf("Commands: 'ls' (VFS Nodes), 'bus' (MMIO), 'uart' (Serial), 'tasks', 'irq', 'exit'\n");
         } else if (strlen(input) > 0) {
             printf("Unknown Command: '%s'\n", input);
         }

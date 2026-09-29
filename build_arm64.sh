@@ -9,26 +9,21 @@ then
     exit 1
 fi
 
+# Flags for Bare-Metal GCC
+FLAGS="-O3 -Wall -Wno-format -ffreestanding -nostdlib -Iinclude"
+
 # Compile ARM64 Assembly Bootstrap
 aarch64-linux-gnu-gcc -c boot/arm64_bootloader.S -o boot/arm64_boot.o
 
 # Compile C-Kernel Files for ARM64
-aarch64-linux-gnu-gcc -O3 -Wall -ffreestanding -nostdlib -Iinclude \
-    -c kernel/main.c -o kernel/main_arm64.o
-aarch64-linux-gnu-gcc -O3 -Wall -ffreestanding -nostdlib -Iinclude \
-    -c kernel/hal.c -o kernel/hal_arm64.o
-aarch64-linux-gnu-gcc -O3 -Wall -ffreestanding -nostdlib -Iinclude \
-    -c kernel/memory.c -o kernel/memory_arm64.o
-aarch64-linux-gnu-gcc -O3 -Wall -ffreestanding -nostdlib -Iinclude \
-    -c kernel/ai_engine.c -o kernel/ai_engine_arm64.o
-aarch64-linux-gnu-gcc -O3 -Wall -ffreestanding -nostdlib -Iinclude \
-    -c kernel/scheduler.c -o kernel/scheduler_arm64.o
-aarch64-linux-gnu-gcc -O3 -Wall -ffreestanding -nostdlib -Iinclude \
-    -c kernel/interrupts.c -o kernel/interrupts_arm64.o
-aarch64-linux-gnu-gcc -O3 -Wall -ffreestanding -nostdlib -Iinclude \
-    -c kernel/bus_driver.c -o kernel/bus_driver_arm64.o
-aarch64-linux-gnu-gcc -O3 -Wall -ffreestanding -nostdlib -Iinclude \
-    -c kernel/vfs_arm64.c -o kernel/vfs_arm64.o
+aarch64-linux-gnu-gcc $FLAGS -c kernel/main.c -o kernel/main_arm64.o
+aarch64-linux-gnu-gcc $FLAGS -c kernel/hal.c -o kernel/hal_arm64.o
+aarch64-linux-gnu-gcc $FLAGS -c kernel/memory.c -o kernel/memory_arm64.o
+aarch64-linux-gnu-gcc $FLAGS -c kernel/ai_engine.c -o kernel/ai_engine_arm64.o
+aarch64-linux-gnu-gcc $FLAGS -c kernel/scheduler.c -o kernel/scheduler_arm64.o
+aarch64-linux-gnu-gcc $FLAGS -c kernel/interrupts.c -o kernel/interrupts_arm64.o
+aarch64-linux-gnu-gcc $FLAGS -c kernel/bus_driver.c -o kernel/bus_driver_arm64.o
+aarch64-linux-gnu-gcc $FLAGS -c kernel/vfs.c -o kernel/vfs_arm64.o
 
 # Link ARM64 ELF Binary
 aarch64-linux-gnu-ld -T boot/linker_arm64.ld \
@@ -43,6 +38,6 @@ aarch64-linux-gnu-ld -T boot/linker_arm64.ld \
     kernel/vfs_arm64.o \
     -o autoai_kernel_arm64.elf
 
-echo "✅ ARM64 Kernel Binary Compiled Successfully: 'autoai_kernel_arm64.elf'"
-echo "🚀 Test in QEMU ARM64 via:"
-echo "   qemu-system-aarch64 -M virt -cpu cortex-a57 -nographic -kernel autoai_kernel_arm64.elf"
+if [ $? -eq 0 ]; then
+    echo "✅ ARM64 Kernel Binary Compiled Successfully: 'autoai_kernel_arm64.elf'"
+fi
